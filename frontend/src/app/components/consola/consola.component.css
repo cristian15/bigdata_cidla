@@ -1,3 +1,16 @@
 .instruccion{
-    width: 50%;
+    width: 90%;
+    margin-top: 15px;
+}
+
+ul{
+    list-style: none;
+}
+.comandos{
+    border: solid red 2px;
+}
+
+.consola{
+    width: 90%;
+    margin: 20px;
 }
