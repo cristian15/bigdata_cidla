@@ -7,6 +7,12 @@ import { PrincipalComponent } from './components/principal/principal.component';
 import { ConsolaComponent } from './components/consola/consola.component';
 import { GraficasComponent } from './components/graficas/graficas.component';
 import { HistorialComponent } from './components/historial/historial.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +24,12 @@ import { HistorialComponent } from './components/historial/historial.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatIconModule,
+    FormsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
