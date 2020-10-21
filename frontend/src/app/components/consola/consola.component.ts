@@ -15,11 +15,10 @@ export class ConsolaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ingresaComando(){
+  ingresaComando(){  
     if(this.comando.length>0){
       this.comandos.push(this.comando);
       this.comando = "";
-      console.log(this.comandos);
     }
   }
 }
