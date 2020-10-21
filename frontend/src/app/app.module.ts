@@ -12,6 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
+import { AccionesComponent } from './components/acciones/acciones.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {MatButtonModule} from '@angular/material/button';
     PrincipalComponent,
     ConsolaComponent,
     GraficasComponent,
-    HistorialComponent
+    HistorialComponent,
+    AccionesComponent
   ],
   imports: [
     BrowserModule,
