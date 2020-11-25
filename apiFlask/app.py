@@ -8,6 +8,7 @@ from bson import ObjectId
 connection_url = 'mongodb://root:toor123456@ds147267.mlab.com:47267/bigdata_cidla?retryWrites=true&w=majority'
 app = Flask(__name__) 
 cors = CORS(app)
+
 client = pymongo.MongoClient(connection_url) 
 # Database 
 Database = client['bigdata_cidla'] 
