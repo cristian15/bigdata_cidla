@@ -4,22 +4,19 @@ import pymongo
 import json
 from bson import ObjectId
 
+# URI de la conexion a la base de datos
 connection_url = 'mongodb://root:toor123456@ds147267.mlab.com:47267/bigdata_cidla?retryWrites=true&w=majority'
 app = Flask(__name__) 
-
+cors = CORS(app)
 client = pymongo.MongoClient(connection_url) 
-#client = pymongo.MongoClient('ds147267.mlab.com', 47267, username='root', password='toor123456', authSource="admin")
 # Database 
 Database = client['bigdata_cidla'] 
-# Table 
+# Colecciones 
 arquetipos = Database.arquetipos 
 historiales = Database.historiales_clinicos 
 indices = Database.indices  
 
-# To find all the entries/documents in a table/collection, 
-# find() function is used. If you want to find all the documents 
-# that matches a certain query, you can pass a queryObject as an 
-# argument. 
+
 @app.route('/historiales', methods=['GET']) 
 def findAllHistoriales(): 
     query = historiales.find() 
