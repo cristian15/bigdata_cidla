@@ -14,8 +14,7 @@ import { FormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import { AccionesComponent } from './components/acciones/acciones.component';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     ConsolaComponent,
     GraficasComponent,
     HistorialComponent,
-    AccionesComponent
+    AccionesComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     FormsModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
