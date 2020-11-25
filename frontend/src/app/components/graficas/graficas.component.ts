@@ -34,20 +34,11 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
       console.log(this.historiales);    
       this._historialService.getSesiones().subscribe(resp=>{
         this.sesiones_medicas = resp;
-       /*  for( let s of resp){
-          this.historiales.sesiones_medica.filter()
-          this.sesiones_medicas.push({
-            nombre_sesion: s,
-            cantidad_sesiones: 
           })
-        } */
-
-      })
     });
   }
   eliminarFiltro(sesion){
-
-    
+    this.sesiones_medicas.splice(this.sesiones_medicas.indexOf(sesion),1);
   }
   barChartMethod() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
