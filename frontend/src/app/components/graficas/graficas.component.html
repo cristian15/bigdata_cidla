@@ -1,16 +1,27 @@
 <div class="container">
   <div class="row mt-4">
+    <mat-chip-list #chipList aria-label="Fruit selection">
+      <mat-chip
+        *ngFor="let s of sesiones_medicas"
+        [selectable]="true"
+        [removable]="true"
+        (removed)="eliminarFiltro(s)">
+        {{s}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+
     <div class="col-sm">
       <canvas #barCanvas></canvas>
       <h5 class="card-title text-center">Barras</h5>
     </div>
-    <div class="col-sm">
+    <!-- <div class="col-sm">
       <canvas #doughnutCanvas></canvas>
       <h5 class="card-title text-center">Dona</h5>
     </div>
     <div class="col-sm">
       <canvas #lineCanvas></canvas>
       <h5 class="card-title text-center">Linea</h5>
-    </div>
+    </div> -->
   </div>
 </div>

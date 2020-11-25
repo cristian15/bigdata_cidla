@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import { HistorialesService } from 'src/app/services/historiales.service';
 @Component({
   selector: 'app-graficas',
   templateUrl: './graficas.component.html',
@@ -21,11 +22,33 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
     this.doughnutChartMethod();
     this.lineChartMethod();
   }
-  constructor() { }
+  constructor(private _historialService: HistorialesService) { }
 
+
+  sesiones_medicas=[];
+  historiales = []
   ngOnInit(): void {
+    
+    this._historialService.getHistoriales().subscribe(res=>{
+      this.historiales=res;  
+      console.log(this.historiales);    
+      this._historialService.getSesiones().subscribe(resp=>{
+        this.sesiones_medicas = resp;
+       /*  for( let s of resp){
+          this.historiales.sesiones_medica.filter()
+          this.sesiones_medicas.push({
+            nombre_sesion: s,
+            cantidad_sesiones: 
+          })
+        } */
+
+      })
+    });
   }
-  
+  eliminarFiltro(sesion){
+
+    
+  }
   barChartMethod() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
