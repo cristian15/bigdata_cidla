@@ -15,6 +15,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { AccionesComponent } from './components/acciones/acciones.component';
 import { HttpClientModule } from '@angular/common/http';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +36,10 @@ import {MatChipsModule} from '@angular/material/chips';
     FormsModule,
     MatButtonModule,
     HttpClientModule,
-    MatChipsModule
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

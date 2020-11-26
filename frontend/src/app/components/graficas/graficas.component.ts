@@ -1,6 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { HistorialesService } from 'src/app/services/historiales.service';
+
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { FormControl } from '@angular/forms';
+import { MatAutocomplete } from '@angular/material/autocomplete';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 @Component({
   selector: 'app-graficas',
   templateUrl: './graficas.component.html',
@@ -16,7 +22,11 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
   doughnutChart: any;
   lineChart: any;
 
-
+  @ViewChild('filtrosInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  formCtrl = new FormControl();
+  
   ngAfterViewInit() {
     this.barChartMethod();
     this.doughnutChartMethod();
@@ -137,5 +147,33 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
         ]
       }
     });
+  }
+
+
+
+  todo = [
+    'Get to work',
+    'Pick up groceries',
+    'Go home',
+    'Fall asleep'
+  ];
+
+  done = [
+    'Get up',
+    'Brush teeth',
+    'Take a shower',
+    'Check e-mail',
+    'Walk dog'
+  ];
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
   }
 }
