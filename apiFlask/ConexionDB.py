@@ -13,4 +13,5 @@ Database = client['bigdata_cidla']
 # Colecciones 
 arquetipos = Database.arquetipos 
 historiales = Database.historiales_clinicos 
-indices = Database.indices  
+indices = Database.indices
+test = Database.pruebas  
