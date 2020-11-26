@@ -10,5 +10,10 @@ import warnings
 warnings.filterwarnings('ignore')
 
 if __name__ == "__main__":
-    arquetipos.create_index('text')
-    arquetipos.create_index('text')
+    indexes = []
+    for attr in arquetipos.find_one().keys() :
+        try:
+            print(type(attr))
+            #print (attr.keys())
+        except:
+            print("Error")
