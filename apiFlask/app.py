@@ -1,5 +1,6 @@
 from ConexionDB import app
-from Rutes import *
+import Rutes_arquetipos
+import Rutes_historiales
 
 if __name__ == '__main__': 
     app.run(debug=True) 

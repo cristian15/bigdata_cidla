@@ -44,7 +44,7 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
       console.log(this.historiales);    
       this._historialService.getSesiones().subscribe(resp=>{
         this.sesiones_medicas = resp;
-          })
+        })
     });
   }
   eliminarFiltro(sesion){

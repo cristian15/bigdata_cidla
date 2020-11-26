@@ -1,5 +1,4 @@
-from flask import Flask, jsonify, request 
-from ConexionDB import app, historiales, arquetipos
+from ConexionDB import app, historiales
 from bson import ObjectId
 import json
 
@@ -24,7 +23,6 @@ def findAllSesionesClinicas():
         salida.append(x)    
     sesiones = []
     for i in salida:
-        count = 0
         for s in i['sesiones_medica']:
             if s['nombre_sesion'] not in sesiones:
                 sesiones.append(s['nombre_sesion'])
@@ -45,19 +43,6 @@ def findAllHistorialesCiudad(ciudad):
     for x in query:
         salida.append(x)
     return JSONEncoder().encode(salida)
-     
-
-@app.route('/arquetipos', methods=['GET']) 
-def findAllArquetipos(): 
-    query = arquetipos.find()[0] 
-    output = {} 
-    i = 0
-    print(query)
-    for x in query: 
-        output[i] = x 
-        #output[i].pop('_id') 
-        i += 1
-    return JSONEncoder().encode(output)
 
 # Convierte a JSON 
 class JSONEncoder(json.JSONEncoder):
