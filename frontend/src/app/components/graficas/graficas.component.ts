@@ -4,8 +4,11 @@ import { HistorialesService } from 'src/app/services/historiales.service';
 
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
-import { MatAutocomplete } from '@angular/material/autocomplete';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-graficas',
@@ -17,28 +20,41 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
   @ViewChild('barCanvas') barCanvas;
   @ViewChild('doughnutCanvas') doughnutCanvas;
   @ViewChild('lineCanvas') lineCanvas;
+  
+  @ViewChild('arquetipoInput') arquetipoInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   barChart: any;
   doughnutChart: any;
   lineChart: any;
 
-  @ViewChild('filtrosInput') fruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   formCtrl = new FormControl();
   
   ngAfterViewInit() {
     this.barChartMethod();
-    this.doughnutChartMethod();
-    this.lineChartMethod();
+  /*   this.doughnutChartMethod();
+    this.lineChartMethod(); */
   }
   constructor(private _historialService: HistorialesService) { }
 
 
+
   sesiones_medicas=[];
-  historiales = []
+  arquetipos = [];
+  allArquetipos = [];
+  arquetiposFilter: Observable<any[]>;
+  historiales = [];
   ngOnInit(): void {
+    this.arquetiposFilter = this.formCtrl.valueChanges.pipe(
+      startWith([]),
+      map((arq: any) => this._filter(arq)));
     
+    this._historialService.getArquetiposSesionesMedicas().subscribe(res=>{
+      this.allArquetipos = res;
+    });
+      console.log(this.arquetipos);
+
     this._historialService.getHistoriales().subscribe(res=>{
       this.historiales=res;  
       console.log(this.historiales);    
@@ -47,9 +63,45 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
         })
     });
   }
-  eliminarFiltro(sesion){
-    this.sesiones_medicas.splice(this.sesiones_medicas.indexOf(sesion),1);
+  eliminarFiltro(a){
+    this.arquetipos.splice(this.arquetipos.indexOf(a),1);
   }
+
+  add(event: MatChipInputEvent): void {
+
+    console.log("ADD:::", event)
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.arquetipos.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.formCtrl.setValue(null);
+  }
+
+
+  selected(event: any): void {
+    console.log(event);
+    this.arquetipos.push(event.option.viewValue);
+    this.arquetipoInput.nativeElement.value = '';
+    this.formCtrl.setValue(null);
+  }
+
+  private _filter(value: any): any[] {
+    const filterValue = value.valor.toLowerCase();
+    console.log("VALOORO:::", value)
+    return this.arquetipos.filter(x => x.valor.toLowerCase().indexOf(filterValue) === 0);
+
+
+  }
+
   barChartMethod() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',

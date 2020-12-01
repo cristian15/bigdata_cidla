@@ -10,7 +10,7 @@ import { HistorialComponent } from './components/historial/historial.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import { AccionesComponent } from './components/acciones/acciones.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -39,7 +39,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatChipsModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    DragDropModule
+    DragDropModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

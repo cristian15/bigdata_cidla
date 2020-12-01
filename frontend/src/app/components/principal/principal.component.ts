@@ -24,8 +24,5 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
-  eliminarFiltro(sesion){
-
-    
-  }
+ 
 }
