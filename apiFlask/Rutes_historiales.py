@@ -28,6 +28,21 @@ def findAllSesionesClinicas():
                 sesiones.append(s['nombre_sesion'])
     return JSONEncoder().encode(sesiones)
 
+@app.route('/sesiones_medica/arquetipos', methods=['GET']) 
+def findAllArquetiposSesionesClinicas(): 
+    query = historiales.find()
+    salida = []
+    for x in query:
+        salida.append(x)    
+    arquetipos = []
+    for i in salida:
+        for s in i['sesiones_medica']:            
+                for a in s['arquetipos']:
+                    for arquetipo in a:
+                        if arquetipo not in arquetipos:
+                            arquetipos.append(arquetipo)
+    return JSONEncoder().encode(arquetipos)
+
 @app.route('/historiales', methods=['GET']) 
 def findAllHistoriales(): 
     query = historiales.find()
