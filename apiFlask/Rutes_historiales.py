@@ -2,7 +2,7 @@ from ConexionDB import app, historiales
 from bson import ObjectId
 import json
 from bson.json_util import dumps
-from const import histos, ruts, sesiones_global, arquetipos_global
+from const import histos, sesiones_global, arquetipos_global
 import pandas as pd
 
 
@@ -55,4 +55,12 @@ def findAllHistoriales():
 @app.route('/sesiones', methods=['GET']) 
 def findAllSesiones(): 
     return dumps(sesiones_global)
+
+@app.route('/historiales/ciudad/<ciudad>', methods=['GET']) 
+def findHistorialCiudad(ciudad): 
+    his = []
+    for h in histos:
+        if(h['ciudad'] == ciudad):
+            his.append(h)   
+    return dumps(his)
 
