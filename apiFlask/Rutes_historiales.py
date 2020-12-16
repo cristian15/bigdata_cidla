@@ -10,6 +10,8 @@ import pandas as pd
 @app.route('/arquetipos', methods=['GET']) 
 def findAllArquetiposSesionesClinicas():     
     return dumps(arquetipos_global)
+
+# Devuelve las ciudades y la cantidad de fichas en esa ciudad
 @app.route('/ciudades', methods=['GET']) 
 def cantidadHistoriasCiudad():  
     ciudades = []
@@ -39,14 +41,12 @@ def cantidadProfesionesCiudad():
 
     index = pd.Index(profesiones)
     cantProf = index.value_counts()
-    #prof = pd.DataFrame(cantProf,columns=['profesion/ciudad','values'])
     profs = {}
     i=0
     for data in cantProf:
         profs.update({i:{'profesion':cantProf.keys()[i],'values':data}})
         i+=1
 
-    
     return dumps(profs)
 
 @app.route('/historiales', methods=['GET']) 
