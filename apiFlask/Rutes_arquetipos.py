@@ -2,14 +2,7 @@ from ConexionDB import app, arquetipos
 from bson import ObjectId
 import json
 
-@app.route('/arquetipos', methods=['GET']) 
-def findAllArquetipos(): 
-    query = arquetipos.find()
-    output = [] 
-    for x in query: 
-        output.append(x) 
-    return JSONEncoder().encode(output)
-##  busca en arquetipo por parametro especifico, si parametro no existe en indice lo crea 
+
 @app.route('/arquetipos/buscar/<parametro>/<valor>', methods=['GET']) 
 def findArquetiposParametro(parametro, valor): 
     if busca_indice(str(parametro)):
