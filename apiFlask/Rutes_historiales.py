@@ -34,14 +34,20 @@ def cantidadProfesionesCiudad():
     
     for h in histos:
         for s in h['sesiones_medica']:
-            profesiones.append({'profesion': s['profesion'], 'ciudad': h['ciudad']})
-            #profesiones.append(s['profesion'] + ';' +  h['ciudad'])
+            profesiones.append([s['profesion'],
+                                h['ciudad']])
 
-    prof = pd.DataFrame(profesiones)
-    item_counts = prof.applymap(lambda x: isinstance(x, dict)).all()
-    profs = []
-   
-    return dumps(prof)
+    index = pd.Index(profesiones)
+    cantProf = index.value_counts()
+    #prof = pd.DataFrame(cantProf,columns=['profesion/ciudad','values'])
+    profs = {}
+    i=0
+    for data in cantProf:
+        profs.update({i:{'profesion':cantProf.keys()[i],'values':data}})
+        i+=1
+
+    
+    return dumps(profs)
 
 @app.route('/historiales', methods=['GET']) 
 def findAllHistoriales(): 
