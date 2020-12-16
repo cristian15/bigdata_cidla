@@ -2,9 +2,6 @@ from ConexionDB import app, historiales
 from bson import ObjectId
 import json
 from bson.json_util import dumps
-from flask_compress import Compress
-
-compress = Compress()
 
 @app.route('/ciudades', methods=['GET']) 
 def findAllCiudades(): 

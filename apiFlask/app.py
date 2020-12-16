@@ -1,10 +1,7 @@
 from ConexionDB import app
 import Rutes_arquetipos
 import Rutes_historiales
-from flask_compress import Compress
 from flask import Flask,render_template
-
-compress = Compress()
 
 app = Flask(__name__, template_folder='template')
 
@@ -14,5 +11,4 @@ def root():
 
 if __name__ == '__main__': 
     app.config["COMPRESS_REGISTER"] = False  # disable default compression of all eligible requests
-    compress.init_app(app)
     app.run(debug=True) 
