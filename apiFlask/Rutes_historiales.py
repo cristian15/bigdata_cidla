@@ -1,6 +1,10 @@
 from ConexionDB import app, historiales
 from bson import ObjectId
 import json
+from bson.json_util import dumps
+from flask_compress import Compress
+
+compress = Compress()
 
 @app.route('/ciudades', methods=['GET']) 
 def findAllCiudades(): 
@@ -18,11 +22,8 @@ def findAllCiudades():
 @app.route('/sesiones_medica', methods=['GET']) 
 def findAllSesionesClinicas(): 
     query = historiales.find()
-    salida = []
-    for x in query:
-        salida.append(x)    
     sesiones = []
-    for i in salida:
+    for i in query:
         for s in i['sesiones_medica']:
             if s['nombre_sesion'] not in sesiones:
                 sesiones.append(s['nombre_sesion'])
@@ -30,26 +31,20 @@ def findAllSesionesClinicas():
 
 @app.route('/sesiones_medica/arquetipos', methods=['GET']) 
 def findAllArquetiposSesionesClinicas(): 
-    query = historiales.find()
-    salida = []
-    for x in query:
-        salida.append(x)    
+    query = historiales.find()      
     arquetipos = []
-    for i in salida:
+    for i in query:
         for s in i['sesiones_medica']:            
                 for a in s['arquetipos']:
                     for arquetipo in a:
                         if arquetipo not in arquetipos:
                             arquetipos.append(arquetipo)
-    return JSONEncoder().encode(arquetipos)
+    return dumps(arquetipos)
 
-@app.route('/historiales', methods=['GET']) 
+@app.route('/api/historiales', methods=['GET']) 
 def findAllHistoriales(): 
     query = historiales.find()
-    salida = []
-    for x in query:
-        salida.append(x)
-    return JSONEncoder().encode(salida)
+    return dumps(list(query))
 
 @app.route('/historiales/ciudad/<ciudad>', methods=['GET']) 
 def findAllHistorialesCiudad(ciudad): 
