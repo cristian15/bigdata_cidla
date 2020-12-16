@@ -1,51 +1,32 @@
 <h1>Historial Clínico</h1>
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Rut</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Ciudad</th>
-        <th scope="col">Sesiones Medicas</th>
-        <th scope="col">Profesionales Atendieron</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1-9</th>
-        <td>Juan Soto</td>
-        <td>Temuco</td>
-        <td>15</td>
-        <td>35</td>
-      </tr>
-      <tr>
-        <th scope="row">1-9</th>
-        <td>Juan Soto</td>
-        <td>Temuco</td>
-        <td>15</td>
-        <td>35</td>
-    </tr>
-    <tr>
-        <th scope="row">1-9</th>
-        <td>Juan Soto</td>
-        <td>Temuco</td>
-        <td>15</td>
-        <td>35</td>
-    </tr>
-    <tr>
-        <th scope="row">1-9</th>
-        <td>Juan Soto</td>
-        <td>Temuco</td>
-        <td>15</td>
-        <td>35</td>
-    </tr>
-    <tr>
-        <th scope="row">1-9</th>
-        <td>Juan Soto</td>
-        <td>Temuco</td>
-        <td>15</td>
-        <td>35</td>
-      </tr>
-    </tbody>
-  </table>
+<p *ngIf="!cargando">{{historiales.length}} Historiales</p>
+<div class="d-flex justify-content-center">
+    <mat-spinner *ngIf="cargando"></mat-spinner>
+</div>
+<div *ngIf="!cargando">
+  <mat-form-field class="example-full-width">
+    <mat-label>Buscar</mat-label>
+    <input (input)="buscarHistorial()" matInput placeholder="Ciudad" [(ngModel)]="buscar">
+  </mat-form-field>
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Rut</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Ciudad</th>
+          <th scope="col">Sesiones Medicas</th>
+          <th scope="col">Profesionales Atendieron</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="historiales">
+        <tr *ngFor="let h of historiales">
+          <td>{{h.rut}}</td>
+          <td>{{h.nombre}} {{h.apellidos}}</td>
+          <td>{{h.ciudad}} </td>
+          <td>{{h.sesiones_medica.length}} </td>
+          <td>{{cuenta(h.profesionales_que_atendieron)}} </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
 
-  <app-acciones></app-acciones>

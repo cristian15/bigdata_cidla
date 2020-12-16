@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ConsolaComponent } from './components/consola/consola.component';
 import { HistorialComponent } from './components/historial/historial.component';
 import { PrincipalComponent } from './components/principal/principal.component';
+import { SesionesComponent } from './components/sesiones/sesiones.component';
 
 
 const routes: Routes = [
@@ -10,10 +10,10 @@ const routes: Routes = [
     path: '', component: PrincipalComponent
   },
   {
-    path: 'consola', component: ConsolaComponent
+    path: 'historial', component: HistorialComponent
   },
   {
-    path: 'historial', component: HistorialComponent
+    path: 'sesiones', component: SesionesComponent
   }
 ];
 

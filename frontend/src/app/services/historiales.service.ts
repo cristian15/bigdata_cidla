@@ -12,9 +12,6 @@ export class HistorialesService {
   getCiudades(){
     return this.http.get<any[]>(URL_SERVICIO+'/ciudades');
   }
-  getSesiones(){
-    return this.http.get<any[]>(URL_SERVICIO+'/sesiones_medica');
-  }
 
   getHistoriales(){
     return this.http.get<any[]>(URL_SERVICIO+'/historiales');
@@ -23,7 +20,16 @@ export class HistorialesService {
   getHistorialesCiudad(ciudad){
     return this.http.get(URL_SERVICIO+'/historiales/ciudad/'+ciudad);
   }
-  getArquetiposSesionesMedicas(){
-    return this.http.get<any[]>(URL_SERVICIO+'/sesiones_medica/arquetipos');
+  getCantidadProfesionalesSesiones(){
+    return this.http.get<any[]>(URL_SERVICIO+'/sesiones/profesiones');
+  }
+  getCantidadProfesionalesCiudadSesiones(){
+    return this.http.get<any[]>(URL_SERVICIO+'/profesiones/ciudad');
+  }
+  getSesionesMedicas(){
+    return this.http.get<any[]>(URL_SERVICIO+'/sesiones');
+  }
+  getArquetipos(){
+    return this.http.get<any[]>(URL_SERVICIO+'/arquetipos');
   }
 }
