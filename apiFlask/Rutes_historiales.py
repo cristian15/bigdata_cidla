@@ -2,8 +2,10 @@ from ConexionDB import app, historiales
 from bson import ObjectId
 import json
 from bson.json_util import dumps
+from const import histos, ruts
 
-@app.route('/ciudades', methods=['GET']) 
+
+@app.route('/ciudades', methods=['GET'])
 def findAllCiudades(): 
     query = historiales.find()
     salida = []
@@ -38,10 +40,14 @@ def findAllArquetiposSesionesClinicas():
                             arquetipos.append(arquetipo)
     return dumps(arquetipos)
 
-@app.route('/api/historiales', methods=['GET']) 
+@app.route('/historiales', methods=['GET']) 
 def findAllHistoriales(): 
-    query = historiales.find()
-    return dumps(list(query))
+    return dumps(histos)
+
+@app.route('/ruts', methods=['GET']) 
+def findAllRuts(): 
+    return dumps(ruts)
+
 
 @app.route('/historiales/ciudad/<ciudad>', methods=['GET']) 
 def findAllHistorialesCiudad(ciudad): 
@@ -50,10 +56,3 @@ def findAllHistorialesCiudad(ciudad):
     for x in query:
         salida.append(x)
     return JSONEncoder().encode(salida)
-
-# Convierte a JSON 
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
