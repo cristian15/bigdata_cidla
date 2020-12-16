@@ -10,11 +10,14 @@ import { HistorialComponent } from './components/historial/historial.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import { AccionesComponent } from './components/acciones/acciones.component';
 import { HttpClientModule } from '@angular/common/http';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +36,11 @@ import {MatChipsModule} from '@angular/material/chips';
     FormsModule,
     MatButtonModule,
     HttpClientModule,
-    MatChipsModule
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    DragDropModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

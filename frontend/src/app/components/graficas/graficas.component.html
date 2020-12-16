@@ -1,17 +1,43 @@
 <div class="container">
   <div class="row mt-4">
-    <mat-chip-list #chipList aria-label="Fruit selection">
-      <mat-chip
-        *ngFor="let s of sesiones_medicas"
-        [selectable]="true"
-        [removable]="true"
-        (removed)="eliminarFiltro(s)">
-        {{s}}
-        <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>
-    </mat-chip-list>
-
-    <div class="col-sm">
+    <div class="col-6">
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip
+            *ngFor="let a of arquetipos"
+            [selectable]="true"
+            [removable]="true"
+            (removed)="eliminarFiltro(a)">
+            {{a.clave}} - {{a.valor}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Arquetipos..."
+            #arquetipoInput
+            [formControl]="formCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let a of arquetiposFilter | async" [value]="a">
+            {{a.clave}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <!-- <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip
+          *ngFor="let s of sesiones_medicas"
+          [selectable]="true"
+          [removable]="true"
+          (removed)="eliminarFiltro(s)">
+          {{s}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list> -->
+  
+    <div class="col-6">
       <canvas #barCanvas></canvas>
       <h5 class="card-title text-center">Barras</h5>
     </div>

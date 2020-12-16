@@ -1,6 +1,15 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { HistorialesService } from 'src/app/services/historiales.service';
+
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { FormControl } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+
 @Component({
   selector: 'app-graficas',
   templateUrl: './graficas.component.html',
@@ -11,44 +20,88 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
   @ViewChild('barCanvas') barCanvas;
   @ViewChild('doughnutCanvas') doughnutCanvas;
   @ViewChild('lineCanvas') lineCanvas;
+  
+  @ViewChild('arquetipoInput') arquetipoInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   barChart: any;
   doughnutChart: any;
   lineChart: any;
 
-
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  formCtrl = new FormControl();
+  
   ngAfterViewInit() {
     this.barChartMethod();
-    this.doughnutChartMethod();
-    this.lineChartMethod();
+  /*   this.doughnutChartMethod();
+    this.lineChartMethod(); */
   }
   constructor(private _historialService: HistorialesService) { }
 
 
+
   sesiones_medicas=[];
-  historiales = []
+  arquetipos = [];
+  allArquetipos = [];
+  arquetiposFilter: Observable<any[]>;
+  historiales = [];
   ngOnInit(): void {
+    this.arquetiposFilter = this.formCtrl.valueChanges.pipe(
+      startWith([]),
+      map((arq: any) => this._filter(arq)));
     
+    this._historialService.getArquetiposSesionesMedicas().subscribe(res=>{
+      this.allArquetipos = res;
+    });
+      console.log(this.arquetipos);
+
     this._historialService.getHistoriales().subscribe(res=>{
       this.historiales=res;  
       console.log(this.historiales);    
       this._historialService.getSesiones().subscribe(resp=>{
         this.sesiones_medicas = resp;
-       /*  for( let s of resp){
-          this.historiales.sesiones_medica.filter()
-          this.sesiones_medicas.push({
-            nombre_sesion: s,
-            cantidad_sesiones: 
-          })
-        } */
-
-      })
+        })
     });
   }
-  eliminarFiltro(sesion){
-
-    
+  eliminarFiltro(a){
+    this.arquetipos.splice(this.arquetipos.indexOf(a),1);
   }
+
+  add(event: MatChipInputEvent): void {
+
+    console.log("ADD:::", event)
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.arquetipos.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.formCtrl.setValue(null);
+  }
+
+
+  selected(event: any): void {
+    console.log(event);
+    this.arquetipos.push(event.option.viewValue);
+    this.arquetipoInput.nativeElement.value = '';
+    this.formCtrl.setValue(null);
+  }
+
+  private _filter(value: any): any[] {
+    const filterValue = value.valor.toLowerCase();
+    console.log("VALOORO:::", value)
+    return this.arquetipos.filter(x => x.valor.toLowerCase().indexOf(filterValue) === 0);
+
+
+  }
+
   barChartMethod() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
@@ -146,5 +199,33 @@ export class GraficasComponent implements OnInit, AfterViewInit  {
         ]
       }
     });
+  }
+
+
+
+  todo = [
+    'Get to work',
+    'Pick up groceries',
+    'Go home',
+    'Fall asleep'
+  ];
+
+  done = [
+    'Get up',
+    'Brush teeth',
+    'Take a shower',
+    'Check e-mail',
+    'Walk dog'
+  ];
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
   }
 }

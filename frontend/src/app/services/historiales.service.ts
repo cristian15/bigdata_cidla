@@ -23,4 +23,7 @@ export class HistorialesService {
   getHistorialesCiudad(ciudad){
     return this.http.get(URL_SERVICIO+'/historiales/ciudad/'+ciudad);
   }
+  getArquetiposSesionesMedicas(){
+    return this.http.get<any[]>(URL_SERVICIO+'/sesiones_medica/arquetipos');
+  }
 }
