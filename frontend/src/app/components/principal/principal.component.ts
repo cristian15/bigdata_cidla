@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ArquetiposService } from 'src/app/services/arquetipos.service';
 import { HistorialesService } from 'src/app/services/historiales.service';
 
 @Component({
@@ -9,19 +8,13 @@ import { HistorialesService } from 'src/app/services/historiales.service';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor(private _arquetiposService: ArquetiposService, private _historialSerice: HistorialesService) { }
+  constructor( private _historialService: HistorialesService) { }
 
   sesiones_medicas = [];
   ciudades = [];
   ngOnInit(): void {
 
-    
-    this._historialSerice.getSesiones().subscribe(res=>{
-      this.sesiones_medicas = res;
-    })
-    this._historialSerice.getCiudades().subscribe(res=>{
-      this.ciudades = res;
-    });
+        
   }
 
  

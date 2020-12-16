@@ -1,5 +1,4 @@
 from ConexionDB import app
-import Rutes_arquetipos
 import Rutes_historiales
 from flask import Flask,render_template
 
